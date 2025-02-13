@@ -14,7 +14,7 @@ export class CourseController {
 
   @Get()
   findAll() {
-    return this.courseService.findAll();
+    return this.courseService.findAll(); // Fetch all courses
   }
 
   @Get(':id')

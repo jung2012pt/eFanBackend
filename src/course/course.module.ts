@@ -4,9 +4,10 @@ import { CourseService } from './course.service';
 import { CourseController } from './course.controller';
 import { Course, CourseSchema } from '../schema/course.schema';
 import { Lesson, LessonSchema } from 'src/schema/lesson.schema';
+import { SubLesson, SubLessonSchema } from 'src/schema/subLesson.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Course.name, schema: CourseSchema }]),MongooseModule.forFeature([{ name: Lesson.name, schema: LessonSchema }])],
+  imports: [MongooseModule.forFeature([{ name: Course.name, schema: CourseSchema },{ name: Lesson.name, schema: LessonSchema },{ name: SubLesson.name, schema: SubLessonSchema }])],
   controllers: [CourseController],
   providers: [CourseService],
 })

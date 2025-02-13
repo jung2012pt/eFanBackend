@@ -4,7 +4,7 @@ import { Model, Types } from 'mongoose';
 import { Course, CourseDocument } from '../schema/course.schema'
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
-import { Lesson } from 'src/schema/lesson.schema';
+import { Lesson,LessonDocument } from 'src/schema/lesson.schema';
 // import { Injectable, Logger } from '@nestjs/common';
 
 
@@ -12,39 +12,41 @@ import { Lesson } from 'src/schema/lesson.schema';
 export class CourseService {
   private readonly logger = new Logger(CourseService.name);
   constructor(@InjectModel(Course.name) private courseModel: Model<CourseDocument>,
-  @InjectModel(Lesson.name) private lessonModel: Model<Lesson>,) {}
+  @InjectModel(Lesson.name) private lessonModel: Model<LessonDocument>,) {}
   
   // Create Course
   async create(createCourseDto: CreateCourseDto): Promise<Course> {
     const newCourse = new this.courseModel(createCourseDto);
     return newCourse.save();
   }
-
-  // Get All Courses
   async findAll(): Promise<Course[]> {
-    return this.courseModel.find().exec();
+    return this.courseModel
+      .find()
+      // .populate({
+      //   path: 'lessons', // Populate lessons for each course
+      //   populate: { path: 'subLessons' } // Populate sub-lessons inside each lesson
+      // })
+      .exec();
   }
-
-  // Get Course by ID
-  async findOne(id: string): Promise<Course> {
+  
+  // Get All Courses
+  async findOne(id: string): Promise<Course > {
     const course = await this.courseModel
       .findById(id)
-      .populate('lessons') // Populate the lessons field
+      .populate('lessons')
+      .lean() // Converts to plain object
       .exec();
-    console.log(id);
-    console.log(course);
- 
+
+      
+
     if (!course) {
       throw new NotFoundException(`Course with ID ${id} not found`);
     }
-   // Find all lessons related to this course
-   // Convert `id` to ObjectId before querying
-   const lessons = await this.lessonModel.find({ courseId: new Types.ObjectId(id) }).exec();
 
- console.log(lessons);
- 
-  return course; // Merge course data with lessons
+    return course ; // Type assertion
   }
+
+
 
   // Update Course by ID
   async update(id: string, updateCourseDto: UpdateCourseDto): Promise<Course> {

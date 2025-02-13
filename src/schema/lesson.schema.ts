@@ -1,7 +1,6 @@
-// lesson.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
-import { Course } from '../schema/course.schema';
+import { Document, Schema as MongooseSchema, Types } from 'mongoose';
+import { Course } from './course.schema';
 
 export type LessonDocument = Lesson & Document;
 
@@ -13,7 +12,7 @@ export class Lesson {
   @Prop()
   content: string;
 
-  @Prop({ type: Types.ObjectId, ref: 'Course', required: true }) // Reference Course
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Course', required: true })
   courseId: Types.ObjectId;
 }
 
