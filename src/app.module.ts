@@ -8,7 +8,7 @@ import { SubLessonModule } from './sublesson/sublesson.module';
 @Module({
   imports: [
     // Adjust the connection string as needed
-    MongooseModule.forRoot('mongodb://localhost:27017/nest'),
+    MongooseModule.forRoot('mongodb+srv://jung2012:eFanimation@efandatabase.ccpdb.mongodb.net/eFanAlldata?retryWrites=true&w=majority&appName=eFanDatabase'),
     CourseModule,
     CatsModule,
     LessonModule,

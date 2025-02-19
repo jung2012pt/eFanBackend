@@ -20,6 +20,11 @@ export class LessonService {
     return this.lessonModel.find().exec();
   }
 
+  // Get All Lessons from a specific course
+  async findAllByCourse(courseId: string): Promise<Lesson[]> {
+    return this.lessonModel.find({ courseId }).exec();
+  }
+
   // Get Lesson by ID
   async findOne(id: string): Promise<Lesson> {
     const lesson = await this.lessonModel.findById(id).exec();
