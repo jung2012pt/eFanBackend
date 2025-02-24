@@ -4,7 +4,7 @@
 #
 
 app = 'efanbackend'
-primary_region = 'syd'
+primary_region = 'sin'
 
 [build]
 
