@@ -12,9 +12,9 @@ export class SubLessonController {
     return this.subLessonService.create(createSubLessonDto);
   }
 
-  @Get()
-  findAll() {
-    return this.subLessonService.findAll();
+  @Get('/lesson/:lessonId')
+  findAll(@Param('lessonId') lessonId: string) {
+    return this.subLessonService.findAll(lessonId);
   }
 
   @Get(':id')
@@ -23,7 +23,10 @@ export class SubLessonController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateSubLessonDto: UpdateSubLessonDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateSubLessonDto: UpdateSubLessonDto,
+  ) {
     return this.subLessonService.update(id, updateSubLessonDto);
   }
 

@@ -22,7 +22,7 @@ export class LessonService {
 
   // Get All Lessons from a specific course
   async findAllByCourse(courseId: string): Promise<Lesson[]> {
-    return this.lessonModel.find({ courseId }).exec();
+    return this.lessonModel.find({ courseId: courseId }).exec();
   }
 
   // Get Lesson by ID

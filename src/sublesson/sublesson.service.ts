@@ -4,10 +4,14 @@ import { Model } from 'mongoose';
 import { SubLesson, SubLessonDocument } from '../schema/subLesson.schema';
 import { CreateSubLessonDto } from './dto/create-sublesson.dto';
 import { UpdateSubLessonDto } from './dto/update-sublesson.dto';
+import { log } from 'console';
 
 @Injectable()
 export class SubLessonService {
-  constructor(@InjectModel(SubLesson.name) private subLessonModel: Model<SubLessonDocument>) {}
+  constructor(
+    @InjectModel(SubLesson.name)
+    private subLessonModel: Model<SubLessonDocument>,
+  ) {}
 
   // Create SubLesson
   async create(createSubLessonDto: CreateSubLessonDto): Promise<SubLesson> {
@@ -16,8 +20,11 @@ export class SubLessonService {
   }
 
   // Get All SubLessons
-  async findAll(): Promise<SubLesson[]> {
-    return this.subLessonModel.find().exec();
+  async findAll(lessonId: string): Promise<SubLesson[]> {
+     let result =await this.subLessonModel.find({ lessonId }).exec();
+     console.log(result);
+     
+     return result;
   }
 
   // Get SubLesson by ID
@@ -30,12 +37,17 @@ export class SubLessonService {
   }
 
   // Update SubLesson by ID
-  async update(id: string, updateSubLessonDto: UpdateSubLessonDto): Promise<SubLesson> {
-    const updatedSubLesson = await this.subLessonModel.findByIdAndUpdate(id, updateSubLessonDto, {
-      new: true,
-      runValidators: true,
-    }).exec();
-    
+  async update(
+    id: string,
+    updateSubLessonDto: UpdateSubLessonDto,
+  ): Promise<SubLesson> {
+    const updatedSubLesson = await this.subLessonModel
+      .findByIdAndUpdate(id, updateSubLessonDto, {
+        new: true,
+        runValidators: true,
+      })
+      .exec();
+
     if (!updatedSubLesson) {
       throw new NotFoundException(`SubLesson with ID ${id} not found`);
     }
@@ -44,7 +56,9 @@ export class SubLessonService {
 
   // Delete SubLesson by ID
   async remove(id: string): Promise<{ message: string }> {
-    const deletedSubLesson = await this.subLessonModel.findByIdAndDelete(id).exec();
+    const deletedSubLesson = await this.subLessonModel
+      .findByIdAndDelete(id)
+      .exec();
     if (!deletedSubLesson) {
       throw new NotFoundException(`SubLesson with ID ${id} not found`);
     }

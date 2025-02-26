@@ -17,3 +17,8 @@ export class Lesson {
 }
 
 export const LessonSchema = SchemaFactory.createForClass(Lesson);
+LessonSchema.virtual('sublessons', {
+  ref: 'Sublesson', // Matches the Lesson model name
+  localField: '_id',
+  foreignField: 'lessonId',
+});

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Document, Schema as MongooseSchema, Types } from 'mongoose';
 
 export type SubLessonDocument = SubLesson & Document;
 
@@ -12,7 +12,10 @@ export class SubLesson {
   content: string;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Lesson', required: true })
-  lessonId: string;
+  lessonId: Types.ObjectId;
+
+  @Prop()
+  reactComponent: string;
 }
 
 export const SubLessonSchema = SchemaFactory.createForClass(SubLesson);
