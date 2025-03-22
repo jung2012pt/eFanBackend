@@ -20,13 +20,16 @@ export class CourseService {
     return newCourse.save();
   }
   async findAll(): Promise<Course[]> {
-    return this.courseModel
-      .find()
-      // .populate({
-      //   path: 'lessons', // Populate lessons for each course
-      //   populate: { path: 'subLessons' } // Populate sub-lessons inside each lesson
-      // })
-      .exec();
+    return (
+      this.courseModel
+        .find()
+        .sort({ _id: 1 })
+        // .populate({
+        //   path: 'lessons', // Populate lessons for each course
+        //   populate: { path: 'subLessons' } // Populate sub-lessons inside each lesson
+        // })
+        .exec()
+    );
   }
   
   // Get All Courses

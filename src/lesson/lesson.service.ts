@@ -17,7 +17,7 @@ export class LessonService {
 
   // Get All Lessons
   async findAll(): Promise<Lesson[]> {
-    return this.lessonModel.find().exec();
+    return this.lessonModel.find().sort({ createdAt: 1 }).exec();
   }
 
   // Get All Lessons from a specific course

@@ -10,6 +10,9 @@ export class Course {
 
   @Prop()
   description: string;
+
+  @Prop()
+  cssFileName: string;
 }
 
 export const CourseSchema = SchemaFactory.createForClass(Course);
