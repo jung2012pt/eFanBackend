@@ -24,6 +24,10 @@ export class QuestionController {
   findAll() {
     return this.questionService.findAll();
   }
+  @Get('set/:setID')
+  findAllBySetID(@Param('setID') setID: string) {
+    return this.questionService.findAllBySetID(setID);
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

@@ -5,8 +5,6 @@ export type QuestionDocument = Question & Document;
 
 @Schema()
 export class Question {
-
-
   @Prop({
     type: MongooseSchema.Types.String,
     ref: 'QuestionSet',
@@ -16,6 +14,13 @@ export class Question {
 
   @Prop({ required: true })
   question_text: string;
+
+  @Prop({ required: true })
+  question_title: string;
+
+  @Prop({ required: true })
+  question_number: number;
 }
+
 
 export const QuestionSchema = SchemaFactory.createForClass(Question);

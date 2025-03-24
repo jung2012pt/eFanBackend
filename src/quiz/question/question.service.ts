@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { Question, QuestionDocument } from '../../schema/quiz/question.schema';
+import { Choice, ChoiceDocument } from '../../schema/quiz/choice.schema';
+
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 
@@ -10,6 +12,7 @@ import { UpdateQuestionDto } from './dto/update-question.dto';
 export class QuestionService {
   constructor(
     @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
+    @InjectModel(Choice.name) private choiceModel: Model<ChoiceDocument>,
   ) {}
 
   async create(dto: CreateQuestionDto): Promise<Question> {
@@ -19,7 +22,24 @@ export class QuestionService {
   async findAll(): Promise<Question[]> {
     return this.questionModel.find().populate('set_id').exec();
   }
+  async findAllBySetID(setID: string): Promise<any[]> {
+    const questions = await this.questionModel
+      .find({ set_id: setID })
+      .sort({ question_number: 1 })
+      .populate('set_id')
+      .exec();
 
+    const questionsWithChoices = await Promise.all(
+      questions.map(async (question) => {
+        const choices = await this.choiceModel
+          .find({ question_id: question._id })
+          .exec();
+        return { ...question.toObject(), choices };
+      }),
+    );
+
+    return questionsWithChoices;
+  }
   async findOne(id: string): Promise<Question> {
     const found = await this.questionModel
       .findById(id)
