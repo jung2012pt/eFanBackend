@@ -20,6 +20,9 @@ export class Question {
 
   @Prop({ required: true })
   question_number: number;
+
+  @Prop({ required: true })
+  question_type: string;
 }
 
 
