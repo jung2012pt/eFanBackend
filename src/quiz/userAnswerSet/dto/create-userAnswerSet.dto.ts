@@ -3,4 +3,5 @@ export class CreateUserAnswerSetDto {
   readonly score: number;
   readonly name: string;
   readonly student_id: string;
+  readonly answers: any;
 }

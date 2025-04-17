@@ -32,7 +32,7 @@ export class QuestionService {
     const questionsWithChoices = await Promise.all(
       questions.map(async (question) => {
         const choices = await this.choiceModel
-          .find({ question_id: question._id })
+          .find({ question_id: question._id }) // originally assuming string match
           .exec();
         return { ...question.toObject(), choices };
       }),

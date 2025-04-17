@@ -1,19 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Document, Schema as MongooseSchema, Types } from 'mongoose';
 
 export type UserAnswerSetDocument = UserAnswerSet & Document;
 
 @Schema()
 export class UserAnswerSet {
-  
-
-  @Prop({
-    type: MongooseSchema.Types.String,
-    ref: 'QuestionSet',
-    required: true,
-  })
-  set_id: string;
-
   @Prop()
   score: number;
 
@@ -22,6 +13,13 @@ export class UserAnswerSet {
 
   @Prop()
   student_id: string;
+
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: 'QuestionSet',
+    required: true,
+  })
+  set_id: Types.ObjectId;
 }
 
 export const UserAnswerSetSchema = SchemaFactory.createForClass(UserAnswerSet);

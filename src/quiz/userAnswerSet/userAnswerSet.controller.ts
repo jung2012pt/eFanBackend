@@ -19,6 +19,12 @@ export class UserAnswerSetController {
   create(@Body() dto: CreateUserAnswerSetDto) {
     return this.userAnswerSetService.create(dto);
   }
+  @Post('/summit')
+  summit(@Body() dto: CreateUserAnswerSetDto) {
+
+    return this.userAnswerSetService.summit(dto);
+
+  }
 
   @Get()
   findAll() {

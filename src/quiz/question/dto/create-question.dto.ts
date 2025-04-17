@@ -4,4 +4,5 @@ export class CreateQuestionDto {
   readonly question_title: string;
   readonly question_number: number;
   readonly question_type: string;
+  
 }
