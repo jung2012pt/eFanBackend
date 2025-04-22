@@ -21,11 +21,12 @@ export class UserAnswerSetController {
   }
   @Post('/summit')
   summit(@Body() dto: CreateUserAnswerSetDto) {
-
     return this.userAnswerSetService.summit(dto);
-
   }
-
+  // @Get('set/:setID')
+  // findAllBySetID(@Param('setID') setID: string) {
+  //   return this.userAnswerSetService.findAllBySetID(setID);
+  // }
   @Get()
   findAll() {
     return this.userAnswerSetService.findAll();
